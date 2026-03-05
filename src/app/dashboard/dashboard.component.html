@@ -1,11 +1,18 @@
-<div>
-  <div>
+<div class="w-full h-full">
+  <div class="w-full h-full">
     <apx-chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"
+      [dataLabels]="chartOptions.dataLabels"
+      [stroke]="chartOptions.stroke"
+      [colors]="chartOptions.colors"
+      [fill]="chartOptions.fill"
+      [markers]="chartOptions.markers"
+      [tooltip]="chartOptions.tooltip"
       [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [grid]="chartOptions.grid"
     >
     </apx-chart>
   </div>
-  <div></div>
 </div>
