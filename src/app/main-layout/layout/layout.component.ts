@@ -16,7 +16,7 @@ import { filter } from 'rxjs';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
   title: string = '';
 
   constructor(
@@ -35,6 +35,4 @@ export class LayoutComponent implements OnInit {
           this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.['title'];
       });
   }
-
-  ngOnInit(): void {}
 }
