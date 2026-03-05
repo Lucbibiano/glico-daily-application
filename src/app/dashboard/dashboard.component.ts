@@ -1,6 +1,12 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { chartOptions } from './chart.model';
+import {
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
+import { ChartOptions, chartOptions } from './chart.model';
 import { GlucoseService } from '../services/glucose.service';
 import { map } from 'rxjs';
 import { Glucose } from '../services/glucose.model';
@@ -13,9 +19,13 @@ import { formatDate } from '@angular/common';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  constructor(private glucoseService: GlucoseService, @Inject(LOCALE_ID) private locale: string) {}
+  constructor(
+    private glucoseService: GlucoseService,
+    @Inject(LOCALE_ID) private locale: string,
+  ) {}
 
-  public chartOptions = chartOptions;
+  @ViewChild('chart') chart?: ChartComponent;
+  public chartOptions!: ChartOptions;
 
   chartData: Array<{ date: string; value: number }> = [];
 
@@ -24,6 +34,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadChartSettings(): void {
+    this.chartOptions = chartOptions;
     this.chartOptions.series = [
       {
         name: 'Glicose',
@@ -45,15 +56,14 @@ export class DashboardComponent implements OnInit {
       .getGlucoseHistory()
       .pipe(
         map((resp: Array<Glucose>) => {
-          const chart: Array<{ date: string; value: number }> = [];
-          resp.forEach((glucose) => {
-            chart.push({ date: formatDate(glucose.measuredAt, 'short', this.locale), value: glucose.value });
-          });
-          return chart;
+          return resp.map((glucose) => ({
+            date: formatDate(glucose.measuredAt, 'short', this.locale),
+            value: glucose.value,
+          }));
         }),
       )
       .subscribe((resp) => {
-        this.chartData = this.chartData.concat(resp);
+        this.chartData = resp;
         this.loadChartSettings();
       });
   }
