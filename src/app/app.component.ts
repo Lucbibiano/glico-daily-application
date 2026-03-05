@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { LayoutComponent } from './main-layout/layout/layout.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [LayoutComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'glico-daily-application';
-}
+export class AppComponent {}

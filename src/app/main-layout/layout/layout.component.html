@@ -1,8 +1,19 @@
 <div class="min-h-screen flex flex-col">
   <app-header class="bg-slate-800 text-white p-4"></app-header>
-
   <main class="flex-grow bg-gray-100 p-8">
-    <app-content></app-content>
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-6">
+        {{ title }}
+      </h1>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <div
+          class="rounded-lg h-[420px] flex items-center justify-center text-gray-400"
+        >
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
   </main>
   <app-footer class="bg-slate-800 text-white p-4"></app-footer>
 </div>
