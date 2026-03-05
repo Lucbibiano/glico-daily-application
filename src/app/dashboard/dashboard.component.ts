@@ -1,34 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  ApexDataLabels,
-  ApexFill,
-  ApexGrid,
-  ApexMarkers,
-  ApexTooltip,
-  ApexYAxis,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
-
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexStroke,
-} from 'ng-apexcharts';
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  fill: ApexFill;
-  grid: ApexGrid;
-  yaxis: ApexYAxis;
-  markers: ApexMarkers;
-  tooltip: ApexTooltip;
-  colors: string[];
-  dataLabels: ApexDataLabels;
-};
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { chartOptions } from './chart.model';
+import { GlucoseService } from '../services/glucose.service';
+import { map } from 'rxjs';
+import { Glucose } from '../services/glucose.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,97 +13,48 @@ export type ChartOptions = {
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  response = [
-    { date: '2026-03-01', value: 95 },
-    { date: '2026-03-02', value: 110 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-01', value: 95 },
-    { date: '2026-03-02', value: 110 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-    { date: '2026-03-03', value: 104 },
-  ];
+  constructor(private glucoseService: GlucoseService, @Inject(LOCALE_ID) private locale: string) {}
 
-  chartOptions: ChartOptions = {
-    series: [
-      {
-        name: 'Glicose',
-        data: [95, 110, 104, 120, 108, 100],
-      },
-    ],
-    chart: {
-      type: 'area',
-      height: 420,
-      width: '100%',
-      toolbar: {
-        show: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 3,
-    },
-    colors: ['#0ea5e9'],
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'dark',
-        shadeIntensity: 0.7,
-        opacityFrom: 0.82,
-        opacityTo: 0.38,
-        stops: [0, 70, 100],
-      },
-    },
-    markers: {
-      size: 3,
-      strokeWidth: 0,
-      hover: { size: 5 },
-    },
-    tooltip: {
-      enabled: true,
-      x: { show: true },
-    },
-    xaxis: {
-      categories: ['01 Mar', '02 Mar', '03 Mar', '04 Mar', '05 Mar'],
-      type: 'category',
-      labels: {
-        rotate: -35,
-      },
-    },
-    yaxis: {
-      min: 90,
-      max: 115,
-      tickAmount: 5,
-    },
-    grid: {
-      borderColor: '#e5e7eb',
-      strokeDashArray: 4,
-    },
-  };
+  public chartOptions = chartOptions;
+
+  chartData: Array<{ date: string; value: number }> = [];
 
   ngOnInit(): void {
+    this.loadChartData();
+  }
+
+  private loadChartSettings(): void {
     this.chartOptions.series = [
       {
         name: 'Glicose',
-        data: this.response.map((r) => r.value),
+        data: this.chartData.map((r) => r.value),
       },
     ];
 
     this.chartOptions.xaxis = {
-      categories: this.response.map((r) => r.date),
+      categories: this.chartData.map((r) => r.date),
       type: 'category',
       labels: {
         rotate: -35,
       },
     };
+  }
+
+  private loadChartData(): void {
+    this.glucoseService
+      .getGlucoseHistory()
+      .pipe(
+        map((resp: Array<Glucose>) => {
+          const chart: Array<{ date: string; value: number }> = [];
+          resp.forEach((glucose) => {
+            chart.push({ date: formatDate(glucose.measuredAt, 'short', this.locale), value: glucose.value });
+          });
+          return chart;
+        }),
+      )
+      .subscribe((resp) => {
+        this.chartData = this.chartData.concat(resp);
+        this.loadChartSettings();
+      });
   }
 }
