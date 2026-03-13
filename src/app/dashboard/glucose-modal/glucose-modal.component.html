@@ -1,1 +1,121 @@
-<p>glucose-modal works!</p>
+<div class="modal-backdrop"></div>
+<div class="modal-box" role="dialog" aria-modal="true">
+  <button class="modal-close" aria-label="Fechar" (click)="onClose(false)">X</button>
+  <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
+    Registre sua glicose 🩸
+  </h1>
+
+  <form id="formGlucose" [formGroup]="formGlucose" (ngSubmit)="save()">
+    <div>
+      <div class="mt-10">
+        <label for="value" class="block mb-2 text-sm">Valor da Glicose:</label>
+        <input
+          type="number"
+          class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-sky-200"
+          [ngClass]="
+            isInvalidField('value')
+              ? 'border-red-500 focus:ring-red-200 focus:border-red-500'
+              : 'border-gray-300 focus:ring-sky-200 focus:border-sky-500'
+          "
+          id="value"
+          name="value"
+          formControlName="value"
+          placeholder="Digite o valor da glicose"
+        />
+      </div>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio"
+              name="measurementType"
+              formControlName="measurementType"
+              value="FASTING"
+              class="peer sr-only"
+            />
+            <div
+              class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
+            ></div>
+            <span class="text-sm">Em jejum</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="measurementType"
+              formControlName="measurementType"
+              value="BEFORE_MEAL"
+              class="peer sr-only"
+            />
+            <div
+              class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
+            ></div>
+            <span class="text-sm">Antes da Refeição</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="measurementType"
+              formControlName="measurementType"
+              value="AFTER_MEAL"
+              class="peer sr-only"
+            />
+            <div
+              class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
+            ></div>
+            <span class="text-sm">Depois da Refeição</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="measurementType"
+              formControlName="measurementType"
+              value="BEFORE_SLEEP"
+              class="peer sr-only"
+            />
+            <div
+              class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
+            ></div>
+            <span class="text-sm">Antes de Dormir</span>
+          </label>
+        </div>
+      </div>
+      <div class="mt-4">
+        <label for="value" class="block mb-2 text-sm">Comentários:</label>
+        <input
+          type="text"
+          class="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200"
+          id="note"
+          name="note"
+          formControlName="note"
+          placeholder="Digite suas observações"
+        />
+      </div>
+    </div>
+    <div class="pt-10 flex justify-center gap-10">
+      <button
+        class="bg-sky-500 text-white font-medium px-4 py-2 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+        type="submit"
+        [disabled]="formGlucose.invalid"
+      >
+        Salvar
+      </button>
+      <button
+        type="button"
+        class="cursor-pointer bg-sky-500 hover:bg-sky-700 text-white font-medium px-4 py-2 rounded-lg"
+        (click)="onClose(false)"
+      >
+        Fechar
+      </button>
+    </div>
+    <div></div>
+  </form>
+</div>

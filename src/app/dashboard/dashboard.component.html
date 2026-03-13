@@ -1,6 +1,7 @@
 <div class="w-full h-full">
   <div class="w-full h-full">
-    <apx-chart #chart
+    <apx-chart
+      #chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"
       [dataLabels]="chartOptions.dataLabels"
@@ -15,7 +16,15 @@
     >
     </apx-chart>
   </div>
-  <div class="text-center pt-10"> 
-    <button class="cursor-pointer bg-sky-500 hover:bg-sky-700 text-white font-medium px-4 py-2 rounded-lg">Registrar Glicose</button>
+  <div class="text-center pt-10">
+    <button
+      class="cursor-pointer bg-sky-500 hover:bg-sky-700 text-white font-medium px-4 py-2 rounded-lg"
+      (click)="openModalForm()"
+    >
+      Registrar Glicose
+    </button>
   </div>
 </div>
+@if (showGlucoseRegistryModal) {
+  <app-glucose-modal (close)="onCloseModal($event)"></app-glucose-modal>
+}

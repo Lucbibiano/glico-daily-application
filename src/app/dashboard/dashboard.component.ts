@@ -11,10 +11,11 @@ import { GlucoseService } from '../services/glucose.service';
 import { map } from 'rxjs';
 import { Glucose } from '../services/glucose.model';
 import { formatDate } from '@angular/common';
+import { GlucoseModalComponent } from './glucose-modal/glucose-modal.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule, GlucoseModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -27,11 +28,9 @@ export class DashboardComponent implements OnInit {
   @ViewChild('chart') chart?: ChartComponent;
   public chartOptions!: ChartOptions;
 
-  chartData: Array<{ date: string; value: number }> = [];
+  protected chartData: Array<{ date: string; value: number }> = [];
 
-  ngOnInit(): void {
-    this.loadChartData();
-  }
+  protected showGlucoseRegistryModal = false;
 
   private loadChartSettings(): void {
     this.chartOptions = chartOptions;
@@ -63,8 +62,23 @@ export class DashboardComponent implements OnInit {
         }),
       )
       .subscribe((resp) => {
-        this.chartData = resp;
+        this.chartData = resp.reverse();
         this.loadChartSettings();
       });
+  }
+
+  protected openModalForm(): void {
+    this.showGlucoseRegistryModal = true;
+  }
+
+  protected onCloseModal(eventSave: boolean): void {
+    this.showGlucoseRegistryModal = false;
+    if (eventSave) {
+      this.loadChartData();
+    }
+  }
+
+  public ngOnInit(): void {
+    this.loadChartData();
   }
 }
