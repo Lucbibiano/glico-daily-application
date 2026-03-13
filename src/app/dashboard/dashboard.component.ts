@@ -32,8 +32,40 @@ export class DashboardComponent implements OnInit {
 
   protected showGlucoseRegistryModal = false;
 
+  private getChartYAxis(): ChartOptions['yaxis'] {
+    if (!this.chartData.length) {
+      return {
+        min: 80,
+        max: 180,
+        tickAmount: 5,
+      };
+    }
+
+    const values = this.chartData.map((item) => item.value);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const range = maxValue - minValue;
+    const padding = Math.max(8, Math.ceil(range * 0.2));
+
+    return {
+      min: Math.max(0, minValue - padding),
+      max: maxValue + padding,
+      tickAmount: 5,
+      forceNiceScale: true,
+    };
+  }
+
   private loadChartSettings(): void {
-    this.chartOptions = chartOptions;
+    this.chartOptions = {
+      ...chartOptions,
+      xaxis: {
+        ...chartOptions.xaxis,
+      },
+      yaxis: {
+        ...chartOptions.yaxis,
+      },
+    };
+
     this.chartOptions.series = [
       {
         name: 'Glicose',
@@ -48,6 +80,8 @@ export class DashboardComponent implements OnInit {
         rotate: -35,
       },
     };
+
+    this.chartOptions.yaxis = this.getChartYAxis();
   }
 
   private loadChartData(): void {
