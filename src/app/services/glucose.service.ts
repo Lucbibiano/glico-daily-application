@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Glucose, GlucoseCreate, GlucoseRespose } from './glucose.model';
@@ -18,5 +18,9 @@ export class GlucoseService {
 
   public createGlucose(payload: GlucoseCreate): Observable<GlucoseRespose> {
     return this.http.post<GlucoseRespose>(this.apiURL, payload);
+  }
+
+  public deleteGlucoseRecord(id: string | undefined): Observable<GlucoseRespose> {
+    return this.http.delete<GlucoseRespose>(`${this.apiURL}/` + id);
   }
 }
