@@ -90,7 +90,7 @@ export class DashboardComponent implements OnInit {
       .pipe(
         map((resp: Array<Glucose>) => {
           return resp.map((glucose) => ({
-            date: formatDate(glucose.measuredAt, 'short', this.locale),
+            date: formatDate(glucose.measuredAt, 'dd/MM/yy HH:mm', this.locale),
             value: glucose.value,
           }));
         }),
