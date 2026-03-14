@@ -15,7 +15,8 @@
           <th>Momento da medição</th>
           <th>Anotações</th>
           <th>Data da medição</th>
-          <th>Excluir?</th>
+          <th>Excluir</th>
+          <th>Editar</th>
         </tr>
       </ng-template>
 
@@ -25,7 +26,8 @@
           <td>{{ item.measurementType | measurementTranslate }}</td>
           <td>{{ item.note }}</td>
           <td>{{ item.measuredAt | date: "dd/MM/yyyy HH:mm" }}</td>
-          <td class="cursor-pointer" (click)="openDeleteModal(item)">🗑️</td>
+          <td class="cursor-pointer" (click)="onOpenModal(item, 'DELETE')">🗑️</td>
+          <td class="cursor-pointer" (click)="onOpenModal(item, 'EDIT')">✍️</td>
         </tr>
       </ng-template>
     </p-table>
@@ -37,8 +39,12 @@
     confirmButtonTitle="Excluir"
     [disableConfirm]="disableConfirm"
     [disableCancel]="disableCancel"
-    (close)="onCloseModal()"
-    (confirm)="onConfirmModal()"
+    (close)="onCloseModal('DELETE')"
+    (confirm)="onConfirmDeleteModal()"
     >Confirma a exclusão do registro de glicose?</app-generic-modal
   >
+}
+
+@if (showEditModal) {
+  <app-glucose-modal (close)="onCloseModal('EDIT')" [formDataToEdit]="glucoseItem"></app-glucose-modal>
 }

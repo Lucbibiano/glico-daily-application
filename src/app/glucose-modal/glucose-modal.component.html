@@ -1,11 +1,16 @@
 <div class="modal-backdrop"></div>
 <div class="modal-box" role="dialog" aria-modal="true">
-  <button class="modal-close" aria-label="Fechar" (click)="onClose(false)">X</button>
+  <button class="modal-close" type="button" aria-label="Fechar" (click)="onClose(false)">
+    <span class="modal-close__icon" aria-hidden="true">
+      <span class="modal-close__line"></span>
+      <span class="modal-close__line"></span>
+    </span>
+  </button>
   <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
     Registre sua glicose 🩸
   </h1>
 
-  <form id="formGlucose" [formGroup]="formGlucose" (ngSubmit)="save()">
+  <form id="formGlucose" [formGroup]="formGlucose" (ngSubmit)="saveOrUpdate()">
     <div>
       <div class="mt-10">
         <label for="value" class="block mb-2 text-sm">Valor da Glicose:</label>

@@ -1,10 +1,4 @@
-import {
-  Component,
-  Inject,
-  LOCALE_ID,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { ChartOptions, chartOptions } from './chart.model';
 import { GlucoseService } from '../services/glucose.service';
@@ -32,6 +26,21 @@ export class DashboardComponent implements OnInit {
 
   protected showGlucoseRegistryModal = false;
 
+  public ngOnInit(): void {
+    this.loadChartData();
+  }
+
+  protected openModalForm(): void {
+    this.showGlucoseRegistryModal = true;
+  }
+
+  protected onCloseModal(eventSave: boolean): void {
+    this.showGlucoseRegistryModal = false;
+    if (eventSave) {
+      this.loadChartData();
+    }
+  }
+  
   private getChartYAxis(): ChartOptions['yaxis'] {
     if (!this.chartData.length) {
       return {
@@ -99,20 +108,5 @@ export class DashboardComponent implements OnInit {
         this.chartData = resp.reverse();
         this.loadChartSettings();
       });
-  }
-
-  protected openModalForm(): void {
-    this.showGlucoseRegistryModal = true;
-  }
-
-  protected onCloseModal(eventSave: boolean): void {
-    this.showGlucoseRegistryModal = false;
-    if (eventSave) {
-      this.loadChartData();
-    }
-  }
-
-  public ngOnInit(): void {
-    this.loadChartData();
   }
 }

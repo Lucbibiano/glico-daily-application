@@ -1,6 +1,11 @@
 <div class="modal-backdrop"></div>
 <div class="modal-box" role="dialog" aria-modal="true">
-  <button class="modal-close" aria-label="Fechar" (click)="onClose()">X</button>
+  <button class="modal-close" type="button" aria-label="Fechar" (click)="onClose()">
+    <span class="modal-close__icon" aria-hidden="true">
+      <span class="modal-close__line"></span>
+      <span class="modal-close__line"></span>
+    </span>
+  </button>
   <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
     {{ modalTitle }}
   </h1>

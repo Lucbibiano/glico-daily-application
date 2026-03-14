@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 import { MeasurementTranslatePipe } from '../pipes/measurement-translate.pipe';
 import { GenericModalComponent } from '../generic-modal/generic-modal.component';
 import { NotificationService } from '../services/notification.service';
+import { GlucoseModalComponent } from '../glucose-modal/glucose-modal.component';
+import { ACTION } from '../glucose-modal/action.model';
 
 @Component({
   selector: 'app-history',
@@ -14,6 +16,7 @@ import { NotificationService } from '../services/notification.service';
     DatePipe,
     MeasurementTranslatePipe,
     GenericModalComponent,
+    GlucoseModalComponent,
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss',
@@ -26,12 +29,54 @@ export class HistoryComponent implements OnInit {
 
   protected history: Array<Glucose> = [];
   protected showDeleteModal: boolean = false;
-  private deleteId!: string | undefined;
+  protected showEditModal: boolean = false;
+  protected glucoseItem!: Glucose;
   protected disableConfirm: boolean = false;
   protected disableCancel: boolean = false;
 
   public ngOnInit(): void {
     this.loadHistory();
+  }
+
+  protected onOpenModal(item: Glucose, actionType: string): void {
+    this.glucoseItem = item;
+    if (actionType === ACTION.DELETE) {
+      this.showDeleteModal = true;
+    } else {
+      this.showEditModal = true;
+    }
+  }
+
+  protected onCloseModal(actionType: string): void {
+    this.resetGlucose();
+    if (actionType === ACTION.DELETE) {
+      this.showDeleteModal = false;
+    } else {
+      this.showEditModal = false;
+      this.loadHistory();
+    }
+  }
+
+  protected onConfirmDeleteModal(): void {
+    this.changeButtonStatus(true);
+    this.delete();
+  }
+
+  protected delete(): void {
+    this.glucoseService.deleteGlucoseRecord(this.glucoseItem.id).subscribe({
+      next: () => {
+        this.confirmDelete();
+      },
+      error: () => {
+        this.changeButtonStatus(true);
+        this.onCloseModal(ACTION.DELETE);
+        this.notificationService.showNotificationBar(
+          'Ocorreu um erro ao deletar o registro. Tente novamente!',
+          'Fechar',
+          4000,
+        );
+      },
+    });
   }
 
   private loadHistory(): void {
@@ -52,7 +97,7 @@ export class HistoryComponent implements OnInit {
 
   private confirmDelete(): void {
     this.changeButtonStatus(false);
-    this.onCloseModal();
+    this.onCloseModal(ACTION.DELETE);
     this.notificationService.showNotificationBar(
       'Registro deletado com sucesso!',
       'Fechar',
@@ -61,35 +106,9 @@ export class HistoryComponent implements OnInit {
     this.loadHistory();
   }
 
-  protected onCloseModal(): void {
-    this.showDeleteModal = false;
-    this.deleteId = '';
-  }
-
-  protected onConfirmModal(): void {
-    this.changeButtonStatus(true);
-    this.delete();
-  }
-
-  protected openDeleteModal(item: Glucose): void {
-    this.deleteId = item.id;
-    this.showDeleteModal = true;
-  }
-
-  protected delete(): void {
-    this.glucoseService.deleteGlucoseRecord(this.deleteId).subscribe({
-      next: () => {
-        this.confirmDelete();
-      },
-      error: () => {
-        this.changeButtonStatus(true);
-        this.onCloseModal();
-        this.notificationService.showNotificationBar(
-          'Ocorreu um erro ao deletar o registro. Tente novamente!',
-          'Fechar',
-          4000,
-        );
-      },
+  private resetGlucose(): void {
+    Object.keys(this.glucoseItem).forEach((key) => {
+      (this.glucoseItem as any)[key] = undefined;
     });
   }
 }

@@ -34,3 +34,64 @@
 .snackbar {
   margin-top: 100px !important;
 }
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(14, 165, 233, 0.14);
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #0369a1;
+  box-shadow: 0 10px 24px -18px rgba(2, 132, 199, 0.75);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.modal-close:hover {
+  transform: translateY(-1px);
+  border-color: rgba(14, 165, 233, 0.26);
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+  box-shadow: 0 14px 28px -18px rgba(2, 132, 199, 0.9);
+}
+
+.modal-close:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(125, 211, 252, 0.45),
+    0 14px 28px -18px rgba(2, 132, 199, 0.9);
+}
+
+.modal-close__icon {
+  position: relative;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.modal-close__line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 0.18rem;
+  border-radius: 9999px;
+  background-color: currentColor;
+  transform-origin: center;
+}
+
+.modal-close__line:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.modal-close__line:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

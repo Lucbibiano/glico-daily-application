@@ -20,7 +20,16 @@ export class GlucoseService {
     return this.http.post<GlucoseRespose>(this.apiURL, payload);
   }
 
-  public deleteGlucoseRecord(id: string | undefined): Observable<GlucoseRespose> {
+  public updateGlucose(
+    payload: GlucoseCreate,
+    id: string | undefined,
+  ): Observable<GlucoseRespose> {
+    return this.http.put<GlucoseRespose>(`${this.apiURL}/` + id, payload);
+  }
+
+  public deleteGlucoseRecord(
+    id: string | undefined,
+  ): Observable<GlucoseRespose> {
     return this.http.delete<GlucoseRespose>(`${this.apiURL}/` + id);
   }
 }
