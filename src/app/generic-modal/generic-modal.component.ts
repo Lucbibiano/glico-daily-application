@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-generic-modal',
@@ -6,10 +13,11 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
   templateUrl: './generic-modal.component.html',
   styleUrl: './generic-modal.component.scss',
 })
-export class GenericModalComponent implements OnInit, OnDestroy{
+export class GenericModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<void>();
   @Input() modalTitle: string = '';
+  @Input() modalText: string = '';
   @Input() closeButtonTitle: string = 'Fechar';
   @Input() confirmButtonTitle: string = 'OK';
   @Input() disableConfirm: boolean = false;

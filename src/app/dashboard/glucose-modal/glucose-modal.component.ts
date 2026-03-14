@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { GlucoseService } from '../../services/glucose.service';
 import { GlucoseRespose } from '../../services/glucose.model';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-glucose-modal',
@@ -26,7 +27,10 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
 
   protected formGlucose: FormGroup;
 
-  constructor(private glucoseService: GlucoseService) {
+  constructor(
+    private glucoseService: GlucoseService,
+    private notificationService: NotificationService,
+  ) {
     this.formGlucose = new FormGroup({
       value: new FormControl(null, [
         Validators.required,
@@ -45,13 +49,21 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
   protected save(): void {
     if (this.formGlucose.valid) {
       this.glucoseService.createGlucose(this.formGlucose.value).subscribe({
-        next: (glucose: GlucoseRespose) => {
-          console.log('Registro de Glicose criado com sucesso', glucose);
+        next: () => {
+          this.notificationService.showNotificationBar(
+            'Registro de Glicose criado com sucesso!',
+            'Fechar',
+            4000,
+          );
           this.formGlucose.reset();
           this.onClose(true);
         },
-        error: (error) => {
-          console.log('Ocorreu um erro ao registrar a glicose.', error);
+        error: () => {
+          this.notificationService.showNotificationBar(
+            'Ocorreu um erro ao registrar a glicose. Tente novamente!',
+            'Fechar',
+            4000,
+          );
         },
       });
     }

@@ -1,11 +1,11 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GlucoseService } from '../services/glucose.service';
 import { TableModule } from 'primeng/table';
 import { Glucose } from '../services/glucose.model';
-import { map } from 'rxjs/operators';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MeasurementTranslatePipe } from '../pipes/measurement-translate.pipe';
 import { GenericModalComponent } from '../generic-modal/generic-modal.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-history',
@@ -19,7 +19,10 @@ import { GenericModalComponent } from '../generic-modal/generic-modal.component'
   styleUrl: './history.component.scss',
 })
 export class HistoryComponent implements OnInit {
-  constructor(private glucoseService: GlucoseService) {}
+  constructor(
+    private glucoseService: GlucoseService,
+    private notificationService: NotificationService,
+  ) {}
 
   protected history: Array<Glucose> = [];
   protected showDeleteModal: boolean = false;
@@ -47,6 +50,17 @@ export class HistoryComponent implements OnInit {
     this.disableConfirm = status;
   }
 
+  private confirmDelete(): void {
+    this.changeButtonStatus(false);
+    this.onCloseModal();
+    this.notificationService.showNotificationBar(
+      'Registro deletado com sucesso!',
+      'Fechar',
+      4000,
+    );
+    this.loadHistory();
+  }
+
   protected onCloseModal(): void {
     this.showDeleteModal = false;
     this.deleteId = '';
@@ -65,15 +79,16 @@ export class HistoryComponent implements OnInit {
   protected delete(): void {
     this.glucoseService.deleteGlucoseRecord(this.deleteId).subscribe({
       next: () => {
-        console.log('Deletado com sucesso.');
-        this.changeButtonStatus(false);
-        this.onCloseModal();
-        this.loadHistory();
+        this.confirmDelete();
       },
-      error: (error) => {
+      error: () => {
         this.changeButtonStatus(true);
         this.onCloseModal();
-        console.log('Erro ao deletar o registro.', error);
+        this.notificationService.showNotificationBar(
+          'Ocorreu um erro ao deletar o registro. Tente novamente!',
+          'Fechar',
+          4000,
+        );
       },
     });
   }
