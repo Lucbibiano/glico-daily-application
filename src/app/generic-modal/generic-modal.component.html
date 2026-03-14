@@ -1,0 +1,26 @@
+<div class="modal-backdrop"></div>
+<div class="modal-box" role="dialog" aria-modal="true">
+  <button class="modal-close" aria-label="Fechar" (click)="onClose()">X</button>
+  <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
+    {{ modalTitle }}
+  </h1>
+
+  <div class="pt-10 flex justify-center gap-10">
+    <button
+      class="bg-sky-500 text-white font-medium px-4 py-2 rounded-lg disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+      type="button"
+      (click)="onConfirm()"
+      [disabled]="disableConfirm"
+    >
+      {{ confirmButtonTitle }}
+    </button>
+    <button
+      type="button"
+      class="cursor-pointer bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 font-medium px-4 py-2 rounded-lg"
+      [disabled]="disableCancel"
+      (click)="onClose()"
+    >
+      {{ closeButtonTitle }}
+    </button>
+  </div>
+</div>

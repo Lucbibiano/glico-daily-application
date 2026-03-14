@@ -22,12 +22,22 @@
       <ng-template pTemplate="body" let-item>
         <tr>
           <td>{{ item.value }}</td>
-          <td>{{ item.measurementType | measurementTranslate}}</td>
+          <td>{{ item.measurementType | measurementTranslate }}</td>
           <td>{{ item.note }}</td>
-          <td>{{ item.measuredAt | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td class="cursor-pointer" (click)="delete(item)">🗑️</td>
+          <td>{{ item.measuredAt | date: "dd/MM/yyyy HH:mm" }}</td>
+          <td class="cursor-pointer" (click)="openDeleteModal(item)">🗑️</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
+@if (showDeleteModal) {
+  <app-generic-modal
+    modalTitle="Confirmar exclusão"
+    confirmButtonTitle="Excluir"
+    [disableConfirm]="disableConfirm"
+    [disableCancel]="disableCancel"
+    (close)="onCloseModal()"
+    (confirm)="onConfirmModal()"
+  ></app-generic-modal>
+}
