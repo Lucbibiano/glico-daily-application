@@ -17,7 +17,6 @@ export class GenericModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<void>();
   @Input() modalTitle: string = '';
-  @Input() modalText: string = '';
   @Input() closeButtonTitle: string = 'Fechar';
   @Input() confirmButtonTitle: string = 'OK';
   @Input() disableConfirm: boolean = false;

@@ -12,8 +12,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { GlucoseService } from '../../services/glucose.service';
-import { NotificationService } from '../../services/notification.service';
+import { GlucoseService } from '../services/glucose.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-glucose-modal',

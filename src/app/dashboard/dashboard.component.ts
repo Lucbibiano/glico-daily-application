@@ -11,7 +11,7 @@ import { GlucoseService } from '../services/glucose.service';
 import { map } from 'rxjs';
 import { Glucose } from '../services/glucose.model';
 import { formatDate } from '@angular/common';
-import { GlucoseModalComponent } from './glucose-modal/glucose-modal.component';
+import { GlucoseModalComponent } from '../glucose-modal/glucose-modal.component';
 
 @Component({
   selector: 'app-dashboard',
