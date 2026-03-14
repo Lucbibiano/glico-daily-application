@@ -13,7 +13,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { GlucoseService } from '../../services/glucose.service';
-import { GlucoseRespose } from '../../services/glucose.model';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
