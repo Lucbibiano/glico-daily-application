@@ -8,6 +8,7 @@ import { GenericModalComponent } from '../generic-modal/generic-modal.component'
 import { NotificationService } from '../services/notification.service';
 import { GlucoseModalComponent } from '../glucose-modal/glucose-modal.component';
 import { ACTION } from '../glucose-modal/action.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-history',
@@ -17,6 +18,7 @@ import { ACTION } from '../glucose-modal/action.model';
     MeasurementTranslatePipe,
     GenericModalComponent,
     GlucoseModalComponent,
+    TranslateModule
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss',

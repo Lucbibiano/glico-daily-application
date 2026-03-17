@@ -7,13 +7,18 @@
     </span>
   </button>
   <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
-    Registre sua glicose 🩸
+    @if(isEditMode) {
+      {{ 'EDIT_YOUR_GLUCOSE' | translate }} 🩸
+    } @else {
+      {{ 'REGISTRY_YOUR_GLUCOSE' | translate }} 🩸
+    }
+    
   </h1>
 
   <form id="formGlucose" [formGroup]="formGlucose" (ngSubmit)="saveOrUpdate()">
     <div>
       <div class="mt-10">
-        <label for="value" class="block mb-2 text-sm">Valor da Glicose:</label>
+        <label for="value" class="block mb-2 text-sm">{{ 'GLUCOSE_VALUE' | translate }} </label>
         <input
           type="number"
           class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-[#0ea5e9] focus:ring-2 focus:ring-sky-200"
@@ -25,7 +30,7 @@
           id="value"
           name="value"
           formControlName="value"
-          placeholder="Digite o valor da glicose"
+          [placeholder]="'TYPE_GLUCOSE' | translate"
         />
       </div>
       <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -41,7 +46,7 @@
             <div
               class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
             ></div>
-            <span class="text-sm">Em jejum</span>
+            <span class="text-sm">{{ 'FASTING' | translate }}</span>
           </label>
         </div>
 
@@ -57,7 +62,7 @@
             <div
               class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
             ></div>
-            <span class="text-sm">Antes da Refeição</span>
+            <span class="text-sm">{{ 'BEFORE_MEAL' | translate }}</span>
           </label>
         </div>
 
@@ -73,7 +78,7 @@
             <div
               class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
             ></div>
-            <span class="text-sm">Depois da Refeição</span>
+            <span class="text-sm">{{ 'AFTER_MEAL' | translate }}</span>
           </label>
         </div>
 
@@ -89,19 +94,19 @@
             <div
               class="h-5 w-5 rounded-full border-2 border-gray-400 peer-checked:border-[#0ea5e9] peer-checked:bg-[#0ea5e9]"
             ></div>
-            <span class="text-sm">Antes de Dormir</span>
+            <span class="text-sm">{{ 'BEFORE_SLEEP' | translate }}</span>
           </label>
         </div>
       </div>
       <div class="mt-4">
-        <label for="value" class="block mb-2 text-sm">Anotações:</label>
+        <label for="value" class="block mb-2 text-sm">{{ 'NOTE' | translate }}:</label>
         <input
           type="text"
           class="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200"
           id="note"
           name="note"
           formControlName="note"
-          placeholder="Digite suas anotações"
+          [placeholder]="'TYPE_NOTE' | translate"
         />
       </div>
     </div>
@@ -111,14 +116,14 @@
         type="submit"
         [disabled]="formGlucose.invalid"
       >
-        Salvar
+        {{ 'SAVE_BUTTON' | translate }}
       </button>
       <button
         type="button"
         class="cursor-pointer bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 font-medium px-4 py-2 rounded-lg"
         (click)="onClose(false)"
       >
-        Fechar
+        {{ 'CLOSE_BUTTON' | translate }}
       </button>
     </div>
     <div></div>

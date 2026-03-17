@@ -6,10 +6,11 @@ import { map } from 'rxjs';
 import { Glucose } from '../services/glucose.model';
 import { formatDate } from '@angular/common';
 import { GlucoseModalComponent } from '../glucose-modal/glucose-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgApexchartsModule, GlucoseModalComponent],
+  imports: [NgApexchartsModule, GlucoseModalComponent, TranslateModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

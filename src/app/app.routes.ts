@@ -15,28 +15,28 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         data: {
-          title: 'Dashboard',
+          titleKey: 'DASHBOARD',
         },
       },
       {
         path: 'history',
         component: HistoryComponent,
         data: {
-          title: 'Histórico',
+          titleKey: 'HISTORY',
         },
       },
       {
         path: 'ai-tips',
         component: AiTipsComponent,
         data: {
-          title: 'Dicas da IA',
+          titleKey: 'IA_TIPS',
         },
       },
       {
         path: 'my-account',
         component: MyAccountComponent,
         data: {
-          title: 'Minha Conta',
+          titleKey: 'MY_ACCOUNT',
         },
       },
     ],

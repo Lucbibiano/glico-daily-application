@@ -16,10 +16,11 @@ import {
 import { GlucoseService } from '../services/glucose.service';
 import { NotificationService } from '../services/notification.service';
 import { Glucose } from '../services/glucose.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-glucose-modal',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './glucose-modal.component.html',
   styleUrl: './glucose-modal.component.scss',
 })
@@ -28,7 +29,7 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
   @Input() formDataToEdit!: Glucose;
 
   protected formGlucose: FormGroup;
-  private isEditMode: boolean = false;
+  protected isEditMode: boolean = false;
 
   constructor(
     private glucoseService: GlucoseService,

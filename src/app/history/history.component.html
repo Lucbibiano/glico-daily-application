@@ -11,12 +11,12 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Glicose</th>
-          <th>Momento da medição</th>
-          <th>Anotações</th>
-          <th>Data da medição</th>
-          <th>Excluir</th>
-          <th>Editar</th>
+          <th>{{ 'GLUCOSE' | translate }}</th>
+          <th>{{ 'MEASUREMENT_TYPE' | translate }}</th>
+          <th>{{ 'NOTE' | translate }}</th>
+          <th>{{ 'MEASUREMENT_AT' | translate }}</th>
+          <th>{{ 'DELETE' | translate }}</th>
+          <th>{{ 'EDIT' | translate }}</th>
         </tr>
       </ng-template>
 
@@ -35,13 +35,15 @@
 </div>
 @if (showDeleteModal) {
   <app-generic-modal
-    modalTitle="Confirmar exclusão"
-    confirmButtonTitle="Excluir"
+    [modalTitle]="'CONFIRM_DELETE_TITLE' | translate"
+    [confirmButtonTitle]="'DELETE_BUTTON' | translate"
+    [closeButtonTitle]="'CLOSE_BUTTON' | translate"
+    
     [disableConfirm]="disableConfirm"
     [disableCancel]="disableCancel"
     (close)="onCloseModal('DELETE')"
     (confirm)="onConfirmDeleteModal()"
-    >Confirma a exclusão do registro de glicose?</app-generic-modal
+    >{{ 'CONFIRM_DELETE_TEXT' | translate }}</app-generic-modal
   >
 }
 

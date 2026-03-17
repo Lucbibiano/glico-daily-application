@@ -9,6 +9,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',
@@ -22,6 +23,7 @@ export class LayoutComponent {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private translateService: TranslateService
   ) {
     this.router.events
       .pipe(
@@ -32,7 +34,7 @@ export class LayoutComponent {
       )
       .subscribe(() => {
         this.title =
-          this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.['title'];
+          this.translateService.instant(this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.['titleKey']);
       });
   }
 }

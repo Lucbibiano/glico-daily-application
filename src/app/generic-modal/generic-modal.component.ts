@@ -17,12 +17,12 @@ export class GenericModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<void>();
   @Input() modalTitle: string = '';
-  @Input() closeButtonTitle: string = 'Fechar';
-  @Input() confirmButtonTitle: string = 'OK';
+  @Input() closeButtonTitle: string = ''
+  @Input() confirmButtonTitle: string = '';
   @Input() disableConfirm: boolean = false;
   @Input() disableCancel: boolean = false;
 
-  protected onClose() {
+   protected onClose() {
     this.close.emit();
   }
 
