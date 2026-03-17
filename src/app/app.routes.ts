@@ -3,6 +3,7 @@ import { LayoutComponent } from './main-layout/layout/layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoryComponent } from './history/history.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { AiTipsComponent } from './ai-tips/ai-tips.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,13 @@ export const routes: Routes = [
         component: HistoryComponent,
         data: {
           title: 'Histórico',
+        },
+      },
+      {
+        path: 'ai-tips',
+        component: AiTipsComponent,
+        data: {
+          title: 'Dicas da IA',
         },
       },
       {
