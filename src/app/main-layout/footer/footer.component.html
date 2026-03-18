@@ -8,8 +8,13 @@
           Glico<span class="text-sky-400">Daily</span>
         </h1>
       </div>
-
+      <div class="text-gray-400 pl-[70%]">
+        <a class="cursor-pointer" [ngClass]="{'underline':  translateDataService.isPortuguese()}" (click)="changeLanguage('pt')">Português</a>
+         | 
+        <a class="cursor-pointer" [ngClass]="{'underline':  translateDataService.isEnglish()}" (click)="changeLanguage('en')">English</a>
+      </div>
       <div class="text-gray-400">© 2026 GlicoDaily</div>
     </div>
   </div>
 </footer>
+

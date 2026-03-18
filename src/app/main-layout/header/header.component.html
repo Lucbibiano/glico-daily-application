@@ -19,27 +19,34 @@
               routerLink="/dashboard"
               routerLinkActive="bg-slate-700 text-white"
               class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700"
-              >{{ 'DASHBOARD' | translate }}</a
+              >{{ "DASHBOARD" | translate }}</a
             >
             <a
               routerLink="/history"
               routerLinkActive="bg-slate-700 text-white"
               class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700"
-              >{{ 'HISTORY' | translate }}</a
+              >{{ "HISTORY" | translate }}</a
             >
             <a
               routerLink="/ai-tips"
               routerLinkActive="bg-slate-700 text-white"
               class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700"
-              >{{ 'IA_TIPS' | translate }}</a
+              >{{ "IA_TIPS" | translate }}</a
             >
             <a
               routerLink="/my-account"
               routerLinkActive="bg-slate-700 text-white"
               class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700"
-              >{{ 'MY_ACCOUNT' | translate }}</a
+              >{{ "MY_ACCOUNT" | translate }}</a
             >
           </div>
+        </div>
+        <div>
+          @if (translateDataService.language() === "pt") {
+            <img src="icon-brasil-rounded-32.png" />
+          } @else {
+            <img src="icon-usa-rounded-32.png" />
+          }
         </div>
       </div>
     </div>

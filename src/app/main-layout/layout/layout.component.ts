@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import {
@@ -23,7 +23,7 @@ export class LayoutComponent {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.router.events
       .pipe(
@@ -33,8 +33,11 @@ export class LayoutComponent {
         ),
       )
       .subscribe(() => {
-        this.title =
-          this.translateService.instant(this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.['titleKey']);
+        this.title = this.translateService.instant(
+          this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.[
+            'titleKey'
+          ],
+        );
       });
   }
 }
