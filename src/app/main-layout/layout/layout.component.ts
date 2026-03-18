@@ -33,11 +33,11 @@ export class LayoutComponent {
         ),
       )
       .subscribe(() => {
-        this.title = this.translateService.instant(
+        this.translateService.get(
           this.activatedRoute.snapshot.firstChild?.routeConfig?.data?.[
             'titleKey'
           ],
-        );
+        ).subscribe((value) => this.title = value)
       });
   }
 }
