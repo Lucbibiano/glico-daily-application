@@ -1,0 +1,62 @@
+@use "./../../variable";
+
+.ai-tips-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.daily-tips {
+  background-color: variable.$primary-color-lighter;
+}
+
+.daily-content {
+  display: flex;
+  flex-direction: column;
+  grid-template-rows: auto 1fr;
+}
+
+.ia-title,
+.daily-text,
+.ai-historical {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  font-family: Roboto;
+  margin-bottom: 15px;
+}
+
+.daily-text,
+.ai-historical {
+  font-size: 15px;
+  font-weight: lighter;
+  padding-left: 15px;
+  text-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.ai-historical {
+  gap: 10px;
+  margin-bottom: 0;
+  background-color: variable.$primary-color-light;
+}
+
+.historical-line {
+  display: flex;
+  flex-direction: row;
+  grid-template-rows: 1fr auto;
+}
+
+.historical-tips {
+  background-color: variable.$primary-color-lighter;
+}
+
+.date-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: nowrap;
+  font-weight: lighter;
+  color: black;
+  padding-left: 10px;
+}

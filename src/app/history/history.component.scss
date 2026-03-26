@@ -1,5 +1,7 @@
+@import './../../variable';
+
 :host {
-  --history-primary: #0ea5e9;
+  --history-primary: $primary-color;
   --history-primary-dark: #0369a1;
   --history-primary-soft: #e0f2fe;
   --history-primary-softest: #f0f9ff;

@@ -23,5 +23,7 @@
   "BEFORE_SLEEP": "Before Sleep",
   "SAVE_BUTTON": "Save",
   "DELETE_BUTTON": "Delete",
-  "CLOSE_BUTTON": "Close"
+  "CLOSE_BUTTON": "Close",
+  "DAILY_TIPE_TITLE": "Daily Tipe",
+  "HISTORICAL_TIPE_TITLE": "Tipe for you"
 }
