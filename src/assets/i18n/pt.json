@@ -25,5 +25,17 @@
   "DELETE_BUTTON": "Excluir",
   "CLOSE_BUTTON": "Fechar",
   "DAILY_TIPE_TITLE": "Dica do dia",
-  "HISTORICAL_TIPE_TITLE": "Dica para você"
+  "HISTORICAL_TIPE_TITLE": "Dica para você",
+  "USER_EMAIL": "E-mail",
+  "TYPE_USER_EMAIL": "Digite seu e-mail",
+  "USER_NAME": "Nome",
+  "TYPE_USER_NAME": "Digite seu nome",
+  "PASSWORD": "Senha",
+  "TYPE_PASSWORD": "Digite sua senha",
+  "CONFIRM_PASSWORD": "Confirmar Senha",
+  "TYPE_CONFIRM_PASSWORD": "Digite sua senha novamente",
+  "LOGIN_BUTTON": "Entrar",
+  "SETUP_BUTTON": "Registrar",
+  "LOGIN_TITLE": "Login",
+  "SETUP_TITLE": "Cadastro"
 }

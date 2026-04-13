@@ -1,0 +1,138 @@
+<div class="header-login">
+  <img class="w-80" src="logotipo.png" />
+  <h1
+    class="text-4xl font-black tracking-tight text-slate-900 leading-none mb-4"
+  >
+    Glico<span class="text-sky-400">Daily</span>
+  </h1>
+</div>
+<div class="container-login">
+  <div class="tab-switcher">
+    <button
+      type="button"
+      [class.active]="activeTab === 'login'"
+      (click)="activeTab = 'login'"
+    >
+      {{ "LOGIN_TITLE" | translate }}
+    </button>
+
+    <button
+      type="button"
+      [class.active]="activeTab === 'setup'"
+      (click)="activeTab = 'setup'"
+    >
+      {{ "SETUP_TITLE" | translate }}
+    </button>
+  </div>
+
+  <div>
+    @if (activeTab === "login") {
+      <form
+        class="form"
+        id="loginForm"
+        [formGroup]="loginForm"
+        (submit)="login()"
+      >
+        <h1 class="font-black tracking-tight text-white drop-shadow-sm">
+          {{ "LOGIN_TITLE" | translate }}
+        </h1>
+        <label for="email">{{ "USER_EMAIL" | translate }}</label>
+        <input
+          name="email"
+          id="email"
+          type="text"
+          formControlName="email"
+          [placeholder]="'TYPE_USER_EMAIL' | translate"
+        />
+
+        <label for="password">{{ "PASSWORD" | translate }}</label>
+        <div class="password-field">
+          <input
+            name="password"
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'TYPE_PASSWORD' | translate"
+          />
+          <a class="toggle-password" (click)="showPassword = !showPassword">
+            @if (showPassword) {
+              <img src="assets/icons/eye-slash.svg" alt="Ocultar senha" />
+            } @else {
+              <img src="assets/icons/eye.svg" alt="Mostrar senha" />
+            }
+          </a>
+        </div>
+        <button type="submit">{{ "LOGIN_BUTTON" | translate }}</button>
+      </form>
+    } @else {
+      <form
+        class="form"
+        id="setupForm"
+        [formGroup]="setupForm"
+        (submit)="setupUser()"
+      >
+        <h1 class="font-black tracking-tight text-white drop-shadow-sm">
+          {{ "SETUP_TITLE" | translate }}
+        </h1>
+
+        <label for="userName">{{ "USER_NAME" | translate }}</label>
+        <input
+          name="userName"
+          id="userName"
+          type="text"
+          formControlName="userName"
+          [placeholder]="'TYPE_USER_NAME' | translate"
+        />
+
+        <label for="email">{{ "USER_EMAIL" | translate }}</label>
+        <input
+          name="email"
+          id="email"
+          type="text"
+          formControlName="email"
+          [placeholder]="'TYPE_USER_EMAIL' | translate"
+        />
+
+        <label for="password">{{ "PASSWORD" | translate }}</label>
+        <div class="password-field">
+          <input
+            name="password"
+            id="password"
+            [type]="showNewPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'TYPE_PASSWORD' | translate"
+          />
+          <a class="toggle-password" (click)="showNewPassword = !showNewPassword">
+            @if (showNewPassword) {
+              <img src="assets/icons/eye-slash.svg" alt="Ocultar senha" />
+            } @else {
+              <img src="assets/icons/eye.svg" alt="Mostrar senha" />
+            }
+          </a>
+        </div>
+
+        <label for="confirmPassword">{{
+          "CONFIRM_PASSWORD" | translate
+        }}</label>
+        <div class="password-field">
+          <input
+            name="confirmPassword"
+            id="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            [placeholder]="'TYPE_CONFIRM_PASSWORD' | translate"
+          />
+          <a class="toggle-password" (click)="showConfirmPassword = !showConfirmPassword">
+            @if (showConfirmPassword) {
+              <img src="assets/icons/eye-slash.svg" alt="Ocultar senha" />
+            } @else {
+              <img src="assets/icons/eye.svg" alt="Mostrar senha" />
+            }
+          </a>
+        </div>
+
+        <button type="submit">{{ "SETUP_BUTTON" | translate }}</button>
+      </form>
+    }
+  </div>
+</div>

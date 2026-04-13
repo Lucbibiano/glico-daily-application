@@ -25,5 +25,17 @@
   "DELETE_BUTTON": "Delete",
   "CLOSE_BUTTON": "Close",
   "DAILY_TIPE_TITLE": "Daily Tipe",
-  "HISTORICAL_TIPE_TITLE": "Tipe for you"
+  "HISTORICAL_TIPE_TITLE": "Tipe for you",
+  "USER_EMAIL": "Email",
+  "TYPE_USER_EMAIL": "Type your email",
+  "USER_NAME": "Name",
+  "TYPE_USER_NAME": "Type your name",
+  "PASSWORD": "Password",
+  "TYPE_PASSWORD": "Type your password",
+  "CONFIRM_PASSWORD": "Confirm Password",
+  "TYPE_CONFIRM_PASSWORD": "Type your password again",
+  "LOGIN_BUTTON": "Login",
+  "SETUP_BUTTON": "Register",
+  "LOGIN_TITLE": "Login",
+  "SETUP_TITLE": "Setup"
 }

@@ -1,11 +1,14 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './main-layout/layout/layout.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HistoryComponent } from './history/history.component';
-import { MyAccountComponent } from './my-account/my-account.component';
-import { AiTipsComponent } from './ai-tips/ai-tips.component';
 
 export const routes: Routes = [
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./login-page/login-page.component').then(
+        (m) => m.LoginPageComponent,
+      ),
+  },
   {
     path: '',
     component: LayoutComponent,
@@ -13,28 +16,36 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadComponent: () =>
+          import('./dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
         data: {
           titleKey: 'DASHBOARD',
         },
       },
       {
         path: 'history',
-        component: HistoryComponent,
+        loadComponent: () =>
+          import('./history/history.component').then((m) => m.HistoryComponent),
         data: {
           titleKey: 'HISTORY',
         },
       },
       {
         path: 'ai-tips',
-        component: AiTipsComponent,
+        loadComponent: () =>
+          import('./ai-tips/ai-tips.component').then((m) => m.AiTipsComponent),
         data: {
           titleKey: 'IA_TIPS',
         },
       },
       {
         path: 'my-account',
-        component: MyAccountComponent,
+        loadComponent: () =>
+          import('./my-account/my-account.component').then(
+            (m) => m.MyAccountComponent,
+          ),
         data: {
           titleKey: 'MY_ACCOUNT',
         },
