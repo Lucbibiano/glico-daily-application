@@ -82,7 +82,7 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
       this.glucoseService.createGlucose(this.formGlucose.value).subscribe({
         next: () => {
           this.notificationService.showNotificationBar(
-            'Registro de Glicose criado com sucesso!',
+            '✅ Registro de Glicose criado com sucesso!',
             'Fechar',
             4000,
           );
@@ -91,7 +91,7 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.notificationService.showNotificationBar(
-            'Ocorreu um erro ao registrar a glicose. Tente novamente!',
+            '❌ Ocorreu um erro ao registrar a glicose. Tente novamente!',
             'Fechar',
             4000,
           );
@@ -107,7 +107,7 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.notificationService.showNotificationBar(
-              'Registro de Glicose atualizado com sucesso!',
+              '✅ Registro de Glicose atualizado com sucesso!',
               'Fechar',
               4000,
             );
@@ -116,7 +116,7 @@ export class GlucoseModalComponent implements OnInit, OnDestroy {
           },
           error: () => {
             this.notificationService.showNotificationBar(
-              'Ocorreu um erro ao atualziar a glicose. Tente novamente!',
+              '❌ Ocorreu um erro ao atualizar a glicose. Tente novamente!',
               'Fechar',
               4000,
             );

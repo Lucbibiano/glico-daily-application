@@ -62,7 +62,7 @@
             }
           </a>
         </div>
-        <button type="submit">{{ "LOGIN_BUTTON" | translate }}</button>
+        <button type="submit" [disabled]="loading$ | async">{{ "LOGIN_BUTTON" | translate }}</button>
       </form>
     } @else {
       @if (!isConfirmCodeStep) {

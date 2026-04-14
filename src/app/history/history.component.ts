@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MeasurementTranslatePipe,
     GenericModalComponent,
     GlucoseModalComponent,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss',
@@ -73,7 +73,7 @@ export class HistoryComponent implements OnInit {
         this.changeButtonStatus(true);
         this.onCloseModal(ACTION.DELETE);
         this.notificationService.showNotificationBar(
-          'Ocorreu um erro ao deletar o registro. Tente novamente!',
+          '❌ Ocorreu um erro ao deletar o registro. Tente novamente!',
           'Fechar',
           4000,
         );
@@ -86,8 +86,12 @@ export class HistoryComponent implements OnInit {
       next: (list) => {
         this.history = list;
       },
-      error: (error) => {
-        console.log('Erro ao carregar o histórico.', error);
+      error: () => {
+        this.notificationService.showNotificationBar(
+          '❌ Ocorreu um erro ao carregar o histórico. Tente novamente!',
+          'Fechar',
+          4000,
+        );
       },
     });
   }
@@ -101,7 +105,7 @@ export class HistoryComponent implements OnInit {
     this.changeButtonStatus(false);
     this.onCloseModal(ACTION.DELETE);
     this.notificationService.showNotificationBar(
-      'Registro deletado com sucesso!',
+      '✅ Registro deletado com sucesso!',
       'Fechar',
       4000,
     );

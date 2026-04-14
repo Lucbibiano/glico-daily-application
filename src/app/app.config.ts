@@ -9,24 +9,32 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { authReducer } from './state/auth.reducer';
+import { AuthEffects } from './state/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(MatSnackBarModule),
     provideTranslateService({
-      loader: provideTranslateHttpLoader({
-        prefix: './assets/i18n/',
-        suffix: '.json'
-      })
+        loader: provideTranslateHttpLoader({
+            prefix: './assets/i18n/',
+            suffix: '.json'
+        })
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
-      theme: {
-        preset: Aura,
-      },
+        theme: {
+            preset: Aura,
+        },
     }),
-  ],
+    provideStore({
+        auth: authReducer
+    }),
+    provideEffects([AuthEffects])
+],
 };
