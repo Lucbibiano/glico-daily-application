@@ -25,6 +25,7 @@
     "@primeng/themes": "^21.0.4",
     "apexcharts": "^3.45.2",
     "autoprefix": "^1.0.1",
+    "aws-amplify": "^6.16.4",
     "ng-apexcharts": "^1.8.0",
     "postcss": "^8.5.8",
     "primeicons": "^7.0.0",

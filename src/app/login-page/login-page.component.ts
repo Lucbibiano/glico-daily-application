@@ -7,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificationService } from '../services/notification.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login-page',
@@ -17,12 +19,18 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
   protected loginForm: FormGroup;
   protected setupForm: FormGroup;
+  protected confirmCodeForm: FormGroup;
   protected showPassword = false;
   protected showNewPassword = false;
   protected showConfirmPassword = false;
+  protected isConfirmCodeStep = true;
   protected activeTab: 'login' | 'setup' = 'login';
 
-  constructor(private readonly router: Router) {
+  constructor(
+    private readonly router: Router,
+    private readonly notificationService: NotificationService,
+    private readonly authenticationService: AuthenticationService,
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
@@ -51,13 +59,93 @@ export class LoginPageComponent {
         ),
       ]),
     });
+    this.confirmCodeForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      code: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^\d+$'),
+      ]),
+    });
   }
 
   protected login(): void {
-    // TODO
+    if (this.loginForm.invalid) {
+      this.notificationService.showNotificationBar(
+        'Os campos de login estão inválidos. Ajuste-os e tente novamente!',
+        'Fechar',
+        4000,
+      );
+      return;
+    }
+    this.authenticationService
+      .login(
+        this.loginForm.get('email')?.value,
+        this.loginForm.get('password')?.value,
+      )
+      .then(() => {
+        // TODO Atualizar o NGRX
+      })
+      .catch(() => {
+        this.notificationService.showNotificationBar(
+          'Ocorreu um erro ao realizar o login. Tente novamente!',
+          'Fechar',
+          4000,
+        );
+      });
   }
 
   protected setupUser(): void {
-    // TODO
+    if (this.setupForm.invalid) {
+      this.notificationService.showNotificationBar(
+        'Os campos do cadatro estão inválidos. Ajuste-os e tente novamente!',
+        'Fechar',
+        4000,
+      );
+      return;
+    }
+
+    this.authenticationService
+      .register(
+        this.setupForm.get('email')?.value,
+        this.setupForm.get('password')?.value,
+        this.setupForm.get('name')?.value,
+      )
+      .then(() => {
+        // TODO Atualizar o NGRX
+      })
+      .catch(() => {
+        this.notificationService.showNotificationBar(
+          'Ocorreu um erro ao realizar o cadastro. Tente novamente!',
+          'Fechar',
+          4000,
+        );
+      });
+  }
+
+  protected confirmCode(): void {
+    if (this.confirmCodeForm.invalid) {
+      this.notificationService.showNotificationBar(
+        'O campo de código está inválido. Ajuste-o e tente novamente!',
+        'Fechar',
+        4000,
+      );
+      return;
+    }
+
+    this.authenticationService
+      .confirm(
+        this.confirmCodeForm.get('email')?.value,
+        this.confirmCodeForm.get('code')?.value,
+      )
+      .then(() => {
+        // TODO Atualizar o NGRX
+      })
+      .catch(() => {
+        this.notificationService.showNotificationBar(
+          'Ocorreu um erro ao confirmar o cadastro. Tente novamente!',
+          'Fechar',
+          4000,
+        );
+      });
   }
 }

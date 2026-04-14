@@ -34,8 +34,11 @@
   "TYPE_PASSWORD": "Type your password",
   "CONFIRM_PASSWORD": "Confirm Password",
   "TYPE_CONFIRM_PASSWORD": "Type your password again",
+  "CODE": "Code",
+  "TYPE_CODE": "Type the code",
   "LOGIN_BUTTON": "Login",
   "SETUP_BUTTON": "Register",
   "LOGIN_TITLE": "Login",
-  "SETUP_TITLE": "Setup"
+  "SETUP_TITLE": "Setup",
+  "CONFIRM_CODE_EMAIL": "Type the code received in your email"
 }

@@ -34,8 +34,11 @@
   "TYPE_PASSWORD": "Digite sua senha",
   "CONFIRM_PASSWORD": "Confirmar Senha",
   "TYPE_CONFIRM_PASSWORD": "Digite sua senha novamente",
+  "CODE": "Código",
+  "TYPE_CODE": "Digite o código",
   "LOGIN_BUTTON": "Entrar",
   "SETUP_BUTTON": "Registrar",
   "LOGIN_TITLE": "Login",
-  "SETUP_TITLE": "Cadastro"
+  "SETUP_TITLE": "Cadastro",
+  "CONFIRM_CODE_EMAIL": "Digite o código recebido no seu e-mail"
 }
