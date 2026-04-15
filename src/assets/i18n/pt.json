@@ -40,5 +40,6 @@
   "SETUP_BUTTON": "Registrar",
   "LOGIN_TITLE": "Login",
   "SETUP_TITLE": "Cadastro",
-  "CONFIRM_CODE_EMAIL": "Digite o código recebido no seu e-mail"
+  "CONFIRM_CODE_EMAIL": "Digite o código recebido no seu e-mail",
+  "LOG_OUT": "Sair"
 }

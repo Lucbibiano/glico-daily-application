@@ -39,6 +39,13 @@
               class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700"
               >{{ "MY_ACCOUNT" | translate }}</a
             >
+
+            <a
+              (click)="logout()"
+              routerLinkActive="bg-slate-700 text-white"
+              class="cursor-pointer bg-slate-900 px-3 py-2 rounded-md hover:bg-slate-700 ml-10"
+              >{{ "LOG_OUT" | translate }}</a
+            >
           </div>
         </div>
         <div>

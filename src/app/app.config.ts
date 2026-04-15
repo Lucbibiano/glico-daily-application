@@ -11,8 +11,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { authReducer } from './state/auth.reducer';
-import { AuthEffects } from './state/auth.effects';
+import { authReducer } from './states/auth/auth.reducer';
+import { AuthEffects } from './states/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [

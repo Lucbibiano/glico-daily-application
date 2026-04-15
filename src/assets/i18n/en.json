@@ -40,5 +40,6 @@
   "SETUP_BUTTON": "Register",
   "LOGIN_TITLE": "Login",
   "SETUP_TITLE": "Setup",
-  "CONFIRM_CODE_EMAIL": "Type the code received in your email"
+  "CONFIRM_CODE_EMAIL": "Type the code received in your email",
+  "LOG_OUT": "Logout"
 }

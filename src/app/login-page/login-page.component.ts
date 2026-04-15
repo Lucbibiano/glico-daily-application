@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   FormControl,
@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { NotificationService } from '../services/notification.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { Store, USER_RUNTIME_CHECKS } from '@ngrx/store';
-import * as AuthActions from './../state/auth.actions';
-import { AppState } from '../state/app.state';
-import { selectLoading } from '../state/app.selectiors';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../states/auth/auth.actions';
+import { AppState } from '../states/app.state';
+import { selectLoading } from '../states/app.selectiors';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-login-page',
@@ -28,9 +29,11 @@ export class LoginPageComponent implements OnInit {
   protected showPassword = false;
   protected showNewPassword = false;
   protected showConfirmPassword = false;
-  protected isConfirmCodeStep = true;
+  protected isConfirmCodeStep = false;
   protected activeTab: 'login' | 'setup' = 'login';
   protected loading$!: Observable<boolean>;
+  protected loading = false;
+  private actions$ = inject(Actions);
 
   constructor(
     private readonly notificationService: NotificationService,
@@ -48,16 +51,20 @@ export class LoginPageComponent implements OnInit {
       confirmPassword: new FormControl(null, [Validators.required]),
     });
     this.confirmCodeForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      code: new FormControl(null, [
+      email: new FormControl({ value: null, disabled: true }, [
         Validators.required,
-        Validators.pattern('^\d+$'),
+        Validators.email,
       ]),
+      code: new FormControl(null, [Validators.required]),
     });
   }
 
   public ngOnInit(): void {
     this.loading$ = this.store.select(selectLoading);
+    this.actions$.pipe(ofType(AuthActions.loginSuccess)).subscribe(() => {
+      this.loginForm.reset();
+      this.loginForm.clearValidators();
+    });
   }
 
   protected login(): void {
@@ -87,6 +94,7 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.authenticationService
       .register(
         this.setupForm.get('email')?.value,
@@ -94,16 +102,22 @@ export class LoginPageComponent implements OnInit {
         this.setupForm.get('userName')?.value,
       )
       .then(() => {
+        this.loading = false;
         this.notificationService.showNotificationBar(
           '✅ Código enviado para o email informado. Verifique sua caixa de entrada e confirme seu cadastro!',
           'Fechar',
           4000,
         );
+        this.confirmCodeForm
+          .get('email')
+          ?.setValue(this.setupForm.get('email')?.value);
         this.setupForm.reset();
         this.setupForm.clearValidators();
         this.isConfirmCodeStep = true;
+        this.loading = false;
       })
       .catch(() => {
+        this.loading = false;
         this.notificationService.showNotificationBar(
           '❌ Ocorreu um erro ao realizar o cadastro. Tente novamente!',
           'Fechar',
@@ -121,24 +135,29 @@ export class LoginPageComponent implements OnInit {
       );
       return;
     }
-
+    this.loading = true;
     this.authenticationService
       .confirm(
         this.confirmCodeForm.get('email')?.value,
         this.confirmCodeForm.get('code')?.value,
       )
-      .then(() => {
+      .then((response) => {
+        this.loading = false;
         this.confirmCodeForm.reset();
         this.confirmCodeForm.clearValidators();
         this.isConfirmCodeStep = false;
         this.activeTab = 'login';
         this.notificationService.showNotificationBar(
-          '✅ Cadastro confirmado com sucesso! Agora você pode fazer login.',
+          '✅ Cadastro confirmado com sucesso!',
           'Fechar',
           4000,
         );
+        this.store.dispatch(
+          AuthActions.registerSuccess({ loginResponse: response })
+        );
       })
       .catch(() => {
+        this.loading = false;
         this.notificationService.showNotificationBar(
           '❌ Ocorreu um erro ao confirmar o cadastro. Tente novamente!',
           'Fechar',
