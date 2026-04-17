@@ -5,30 +5,15 @@ export const login = createAction(
   props<{ email: string; password: string }>(),
 );
 
-export const loginSuccess = createAction(
-  '[Auth] Login Success',
-  props<{ loginResponse: any }>(),
-);
+export const loginSuccess = createAction('[Auth] Login Success');
 
 export const loginFailure = createAction(
   '[Auth] Login Failure',
   props<{ error: any }>(),
 );
 
-export const registerSuccess = createAction(
-  '[Auth] Register Success',
-  props<{ loginResponse: any }>(),
-);
+export const logOut = createAction('[Auth] Logout');
 
-export const logOut = createAction(
-  '[Auth] Logout'
-);
+export const logOutSuccess = createAction('[Auth] Logout Success');
 
-export const logOutSuccess = createAction(
-  '[Auth] Logout Success'
-);
-
-export const logOutFailure = createAction(
-  '[Auth] Logout Failure'
-);
-
+export const logOutFailure = createAction('[Auth] Logout Failure');

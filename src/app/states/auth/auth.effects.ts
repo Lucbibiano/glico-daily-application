@@ -18,7 +18,7 @@ export class AuthEffects {
       ofType(AuthActions.login),
       switchMap(({ email, password }) =>
         from(this.authenticationService.login(email, password)).pipe(
-          map((loginResponse) => AuthActions.loginSuccess({ loginResponse })),
+          map(() => AuthActions.loginSuccess()),
           catchError((error) => of(AuthActions.loginFailure({ error }))),
         ),
       ),
@@ -29,8 +29,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginFailure),
-        tap((error) => {
-          console.log('Erro ao realizar login:', error);
+        tap(() => {
           this.notificationService.showNotificationBar(
             '❌ Ocorreu um erro ao realizar o login. Tente novamente!',
             'Fechar',
@@ -50,13 +49,6 @@ export class AuthEffects {
         }),
       ),
     { dispatch: false },
-  );
-
-  registerSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.registerSuccess),
-      map(({ loginResponse }) => AuthActions.loginSuccess({ loginResponse })),
-    ),
   );
 
   logOut$ = createEffect(() =>

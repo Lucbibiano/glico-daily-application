@@ -7,11 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { NotificationService } from '../services/notification.service';
-import { AuthenticationService } from '../services/authentication.service';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../states/auth/auth.actions';
+import * as RegisterActions from '../states/register/register.actions';
 import { AppState } from '../states/app.state';
-import { selectLoading } from '../states/app.selectiors';
+import {
+  selectLoadingAuth,
+  selectLoadingRegister,
+} from '../states/app.selectiors';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Actions, ofType } from '@ngrx/effects';
@@ -32,12 +35,11 @@ export class LoginPageComponent implements OnInit {
   protected isConfirmCodeStep = false;
   protected activeTab: 'login' | 'setup' = 'login';
   protected loading$!: Observable<boolean>;
-  protected loading = false;
+  protected loadingRegister$!: Observable<boolean>;
   private actions$ = inject(Actions);
 
   constructor(
     private readonly notificationService: NotificationService,
-    private readonly authenticationService: AuthenticationService,
     private store: Store<AppState>,
   ) {
     this.loginForm = new FormGroup({
@@ -60,11 +62,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loading$ = this.store.select(selectLoading);
-    this.actions$.pipe(ofType(AuthActions.loginSuccess)).subscribe(() => {
-      this.loginForm.reset();
-      this.loginForm.clearValidators();
-    });
+    this.loading$ = this.store.select(selectLoadingAuth);
+    this.loadingRegister$ = this.store.select(selectLoadingRegister);
+
+    this.actionsSub();
   }
 
   protected login(): void {
@@ -93,37 +94,13 @@ export class LoginPageComponent implements OnInit {
       );
       return;
     }
-
-    this.loading = true;
-    this.authenticationService
-      .register(
-        this.setupForm.get('email')?.value,
-        this.setupForm.get('password')?.value,
-        this.setupForm.get('userName')?.value,
-      )
-      .then(() => {
-        this.loading = false;
-        this.notificationService.showNotificationBar(
-          '✅ Código enviado para o email informado. Verifique sua caixa de entrada e confirme seu cadastro!',
-          'Fechar',
-          4000,
-        );
-        this.confirmCodeForm
-          .get('email')
-          ?.setValue(this.setupForm.get('email')?.value);
-        this.setupForm.reset();
-        this.setupForm.clearValidators();
-        this.isConfirmCodeStep = true;
-        this.loading = false;
-      })
-      .catch(() => {
-        this.loading = false;
-        this.notificationService.showNotificationBar(
-          '❌ Ocorreu um erro ao realizar o cadastro. Tente novamente!',
-          'Fechar',
-          4000,
-        );
-      });
+    this.store.dispatch(
+      RegisterActions.register({
+        name: this.setupForm.get('userName')?.value,
+        password: this.setupForm.get('password')?.value,
+        email: this.setupForm.get('email')?.value,
+      }),
+    );
   }
 
   protected confirmCode(): void {
@@ -135,34 +112,37 @@ export class LoginPageComponent implements OnInit {
       );
       return;
     }
-    this.loading = true;
-    this.authenticationService
-      .confirm(
-        this.confirmCodeForm.get('email')?.value,
-        this.confirmCodeForm.get('code')?.value,
-      )
-      .then((response) => {
-        this.loading = false;
+
+    this.store.dispatch(
+      RegisterActions.codeVerification({
+        email: this.confirmCodeForm.get('email')?.value,
+        code: this.confirmCodeForm.get('code')?.value,
+      }),
+    );
+  }
+
+  private actionsSub(): void {
+    this.actions$.pipe(ofType(AuthActions.loginSuccess)).subscribe(() => {
+      this.loginForm.reset();
+      this.loginForm.clearValidators();
+    });
+    this.actions$
+      .pipe(ofType(RegisterActions.registerSuccess))
+      .subscribe(() => {
+        this.confirmCodeForm
+          .get('email')
+          ?.setValue(this.setupForm.get('email')?.value);
+        this.setupForm.reset();
+        this.setupForm.clearValidators();
+        this.isConfirmCodeStep = true;
+      });
+    this.actions$
+      .pipe(ofType(RegisterActions.codeVerificationSuccess))
+      .subscribe(() => {
         this.confirmCodeForm.reset();
         this.confirmCodeForm.clearValidators();
         this.isConfirmCodeStep = false;
         this.activeTab = 'login';
-        this.notificationService.showNotificationBar(
-          '✅ Cadastro confirmado com sucesso!',
-          'Fechar',
-          4000,
-        );
-        this.store.dispatch(
-          AuthActions.registerSuccess({ loginResponse: response })
-        );
-      })
-      .catch(() => {
-        this.loading = false;
-        this.notificationService.showNotificationBar(
-          '❌ Ocorreu um erro ao confirmar o cadastro. Tente novamente!',
-          'Fechar',
-          4000,
-        );
       });
   }
 }

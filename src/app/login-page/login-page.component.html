@@ -138,7 +138,7 @@
             </a>
           </div>
 
-          <button type="submit" [disabled]="loading">{{ "SETUP_BUTTON" | translate }}</button>
+          <button type="submit" [disabled]="loadingRegister$ | async">{{ "SETUP_BUTTON" | translate }}</button>
         </form>
       } @else {
         <form
@@ -169,7 +169,7 @@
               [placeholder]="'TYPE_CODE' | translate"
             />
           </div>
-          <button type="submit" [disabled]="loading">{{ "SETUP_BUTTON" | translate }}</button>
+          <button type="submit" [disabled]="loadingRegister$ | async">{{ "SETUP_BUTTON" | translate }}</button>
         </form>
       }
     }

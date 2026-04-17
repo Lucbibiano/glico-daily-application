@@ -13,6 +13,8 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { authReducer } from './states/auth/auth.reducer';
 import { AuthEffects } from './states/auth/auth.effects';
+import { RegisterEffects } from './states/register/register.effects';
+import { registerReducer } from './states/register/register.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,8 +35,9 @@ export const appConfig: ApplicationConfig = {
         },
     }),
     provideStore({
-        auth: authReducer
+        auth: authReducer,
+        register: registerReducer
     }),
-    provideEffects([AuthEffects])
+    provideEffects([AuthEffects, RegisterEffects])
 ],
 };

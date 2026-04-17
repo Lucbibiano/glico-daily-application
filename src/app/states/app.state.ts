@@ -1,5 +1,7 @@
-import { AuthState } from './auth/auth.reducer';
+import { IAuthState } from './auth/auth.reducer';
+import { IRegisterState } from './register/register.reducer';
 
 export interface AppState {
-  auth: AuthState;
+  auth: IAuthState;
+  register: IRegisterState
 }
