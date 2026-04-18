@@ -5,7 +5,7 @@ export const selectAuth = (state: AppState) => state.auth;
 
 export const selectLoadingAuth = createSelector(selectAuth, (auth) => auth.loading);
 
-export const selectLoggedIn = createSelector(selectAuth, (auth) => auth.isLoggedIn);
+export const selectIsInitialized = createSelector(selectAuth, (auth) => auth.isInitialized);
 
 export const selectRegister = (state: AppState) => state.register;
 

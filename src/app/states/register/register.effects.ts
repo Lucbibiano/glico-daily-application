@@ -61,7 +61,7 @@ export class RegisterEffects {
       ofType(RegisterActions.codeVerification),
       switchMap(({ email, code }) =>
         from(this.authenticationService.confirm(email, code)).pipe(
-          map(() => AuthActions.loginSuccess()),
+          map(() => AuthActions.storeToken()),
           catchError((error) =>
             of(RegisterActions.codeVerificationFailure(error)),
           ),
@@ -95,7 +95,7 @@ export class RegisterEffects {
           4000,
         );
       }),
-      map(() => AuthActions.loginSuccess()),
+      map(() => AuthActions.storeToken()),
     ),
   );
 }

@@ -5,12 +5,16 @@ export interface IAuthState {
   loading: boolean;
   error: any;
   isLoggedIn: boolean;
+  isInitialized: boolean;
+  token: string;
 }
 
 export const initialState: IAuthState = {
   loading: false,
   error: null,
   isLoggedIn: false,
+  isInitialized: false,
+  token: ''
 };
 
 export const authReducer = createReducer(
@@ -21,10 +25,13 @@ export const authReducer = createReducer(
     loading: true,
     error: null,
   })),
-  on(AuthActions.loginSuccess, (state) => ({
+  on(AuthActions.loginSuccess, (state, { token }) => ({
     ...state,
     loading: false,
     isLoggedIn: true,
+    token: token,
+    isInitialized: true,
+
   })),
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
@@ -43,5 +50,5 @@ export const authReducer = createReducer(
   on(AuthActions.logOutFailure, (state) => ({
     ...state,
     loading: false,
-  })) 
+  }))
 );

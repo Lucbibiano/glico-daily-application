@@ -7,7 +7,7 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -15,6 +15,7 @@ import { authReducer } from './states/auth/auth.reducer';
 import { AuthEffects } from './states/auth/auth.effects';
 import { RegisterEffects } from './states/register/register.effects';
 import { registerReducer } from './states/register/register.reducer';
+import { authInterceptor } from './services/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,7 +28,9 @@ export const appConfig: ApplicationConfig = {
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+        withInterceptors([authInterceptor])
+    ),
     provideAnimationsAsync(),
     providePrimeNG({
         theme: {

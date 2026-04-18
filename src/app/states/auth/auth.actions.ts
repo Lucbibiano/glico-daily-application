@@ -5,7 +5,10 @@ export const login = createAction(
   props<{ email: string; password: string }>(),
 );
 
-export const loginSuccess = createAction('[Auth] Login Success');
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{ token: string, initialize?: boolean}>(),
+);
 
 export const loginFailure = createAction(
   '[Auth] Login Failure',
@@ -16,4 +19,8 @@ export const logOut = createAction('[Auth] Logout');
 
 export const logOutSuccess = createAction('[Auth] Logout Success');
 
-export const logOutFailure = createAction('[Auth] Logout Failure');
+export const logOutFailure = createAction('[Auth] Logout Failure', props<{ redirectOnly?: boolean }>());
+
+export const storeToken = createAction('[Auth] Store Token');
+
+export const initializeSession = createAction('[Auth] Initialize Session');
