@@ -16,6 +16,7 @@ import { AuthEffects } from './states/auth/auth.effects';
 import { RegisterEffects } from './states/register/register.effects';
 import { registerReducer } from './states/register/register.reducer';
 import { authInterceptor } from './services/auth.interceptor';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,6 @@ export const appConfig: ApplicationConfig = {
         auth: authReducer,
         register: registerReducer
     }),
-    provideEffects([AuthEffects, RegisterEffects])
+    provideEffects([AuthEffects, RegisterEffects]), provideClientHydration(withEventReplay())
 ],
 };
